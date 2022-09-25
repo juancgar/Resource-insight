@@ -32,11 +32,21 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
     insights = []
     # Regresaremos informacion del top 3 de nodos que reciba y envíe información
     top = min(len(net_values), 3)
-    for idx in range(top):
-        nombre = grafo[net_values[idx][1]]["nombre"]
-        insights.append(
-            "El nodo " + nombre + " es el nodo de distribucion #" + str(idx+1)
-        )
+    nombre1 = grafo[net_values[0][1]["nombre"]]
+    insights.append(
+        nombre1 +
+        " es el principal productor neto de ingresos/egreso"
+    )
+    nombre2 = grafo[net_values[0][1]["nombre"]]
+    insights.append(
+        nombre2 +
+        " es el segundo lugar de productor neto de ingresos/egreso"
+    )
+    nombre3 = grafo[net_values[0][1]["nombre"]]
+    insights.append(
+        nombre3 +
+        " es el tercer más grande productor neto de ingresos/egreso"
+    )
     return insights
 
 # Este nodo manda tanto % a su hijo, pero su hijo solo le regresa X %
