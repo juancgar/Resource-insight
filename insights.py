@@ -207,3 +207,15 @@ f = {
 }
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
 print(insight_perdida_recursos(auxDic, 'A'))
+
+def threshold_bajo(grafo):
+    grafoNeto = popula_flujo_neto(grafo)
+
+    mediaEstadisticagrafoNetoDeDiferencia = 0
+    cont = 0
+    for x,y in grafoNeto:
+        mediaEstadisticaDeDiferencia += x
+        cont += 1
+    
+    
+    grafoNeto.sort()

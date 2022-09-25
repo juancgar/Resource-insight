@@ -1,23 +1,23 @@
-from paho.mqtt import client as mqtt_client
-import fastapi
+import paho.mqtt.client as mqtt
 
-broker = 'broker.emqx.io'
-port = 1883
-topic = "python/mqtt"
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-# username = 'emqx'
-# password = 'public'
+HOST = 'local'
+PORT = 1883
 
 
-def connect_mqtt():
-    def on_connect(client, userdata, flags, rc):
-        if rc == 0:
-            print("Connected to MQTT Broker!")
-        else:
-            print("Failed to connect, return code %d\n", rc)
-    # Set Connecting Client ID
-    client = mqtt_client.Client(client_id)
-    client.username_pw_set(username, password)
+def on_connect(client, userdata, flags, rc):
+    print("Connected to {0} with result code {1}".format(HOST, rc))
+
+def on_message(client, userdata, msg):
+    print("Message received on topic {0}: {1}"\
+        .format(msg.topic, msg.payload))
+
+
+def start(file):
+    client = mqtt.Client()
     client.on_connect = on_connect
-    client.connect(broker, port)
-    return client
+    client.on_message = on_message
+
+    client.connect(HOST, PORT, 60)
+    client.loop_forever()
+
+
