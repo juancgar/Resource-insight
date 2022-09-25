@@ -33,9 +33,10 @@ async def get_net_flux(request: Request):
 @app.post("/get-node-with-more-error")
 async def get_node_with_more_error(request: Request):
     file = await request.json()
-    return dr.threshold_bajo(file)
+    return dr.insight_mayor_riesgo_de_shortage(file)
 
 @app.post("/mqtt-demonstration")
 async def mqtt_demonstration(request:Request):
     file = await request.json()
-    return mqtt.start(file)
+    mqtt.run()
+    return {200}

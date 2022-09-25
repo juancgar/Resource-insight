@@ -208,13 +208,30 @@ f = {
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
 
 
+#insight nuevo
 def threshold_bajo(grafo):
     grafoNeto = popula_flujo_neto(grafo)
-
     mediaEstadisticagrafoNetoDeDiferencia = 0
     cont = 0
-    for x, y in grafoNeto:
-        mediaEstadisticaDeDiferencia += x
-        cont += 1
+    for x in grafoNeto:
+        mediaEstadisticagrafoNetoDeDiferencia = mediaEstadisticagrafoNetoDeDiferencia + x[0]
+        cont = cont+ 1
+    media = mediaEstadisticagrafoNetoDeDiferencia/cont
+    listaDeMenos = []
+    for x in grafoNeto:
+        if x[0] <= media:
+            listaDeMenos.append(x)
 
-    grafoNeto.sort()
+    return listaDeMenos
+def insight_mayor_riesgo_de_shortage(grafo):
+    net_values = threshold_bajo(auxDic)
+    insights = []
+    # Regresaremos informacion del top 3 de nodos que son susceptible a shortage
+    top = min(len(net_values), 3)
+    for idx in range(top):
+        nombre = grafo[net_values[idx][1]]["nombre"]
+        insights.append(
+            "El nodo "+ nombre + "es susceptible a escasez "
+        )
+    return insights
+
