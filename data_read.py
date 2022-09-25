@@ -13,10 +13,14 @@ def popula_flujo_neto(grafo):  # Recibe un diccionario <Object.id, Object>
     net_values = []
     for curObj in grafo:
         nodo = grafo[curObj]
-        if nodo.sinIngresos or nodo.sinEgresos:
+        sinIngresos = nodo["sinIngresos"]
+        sinEgresos = nodo["sinEgresos"]
+        if sinIngresos or sinEgresos:
             continue
+        ingresos = nodo["ingresos"]
+        egresos = nodo["egresos"]
         ingreso, egreso = calculo_total_neto(
-            nodo.ingresos.values(), nodo.egresos.values())
+            ingresos.values(), egresos.values())
         net_values.append((ingreso-egreso, curObj))
     net_values.sort(reverse=True)
     return net_values
@@ -28,9 +32,9 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
     # Regresaremos informacion del top 3 de nodos que reciba y envíe información
     top = min(len(net_values), 3)
     for idx in range(top):
+        nombre = grafo[net_values[idx][1]]["nombre"]
         insights.append(
-            "El nodo " + grafo[net_values[idx][1]].nombre +
-            " es el nodo de distribucion #" + str(idx+1)
+            "El nodo " + " es el nodo de distribucion #" + str(idx+1)
         )
     return insights
 
@@ -114,6 +118,7 @@ def curiosities_about_node(grafo, newId):
     #     outputStr.append("\n ")
     #     outputStr.append("\nSus dependencias utilizan el ")
     # print(newOutStr)
+
 
     # if len(heap) >= 4:
     # stats.append()
