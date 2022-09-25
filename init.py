@@ -1,8 +1,16 @@
 from typing import Union
 
 from fastapi import FastAPI
+from data_read import popula_flujo_neto
 
 app = FastAPI()
+
+
+def get_flujo_neto():
+    # AQUI VA LA LLAMADA
+    grafo = []  # [nombre, id, ingresos, egresos]
+
+    popula_flujo_neto(grafo)
 
 
 @app.get("/")
