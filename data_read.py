@@ -138,8 +138,12 @@ def threshold_bajo(grafo):
     mediaEstadisticagrafoNetoDeDiferencia = 0
     cont = 0
     for x,y in grafoNeto:
-        mediaEstadisticaDeDiferencia += x
-        cont += 1
-    
-    
-    grafoNeto.sort()
+        mediaEstadisticaDeDiferencia =  mediaEstadisticaDeDiferencia + x
+        cont = cont + 1
+    mediaEstadisticagrafoNetoDeDiferencia = mediaEstadisticagrafoNetoDeDiferencia / cont
+    cont = []
+    for x,y in grafoNeto:
+        if x <= mediaEstadisticagrafoNetoDeDiferencia:
+            cont.append(y)
+    print(grafoNeto)
+    return grafoNeto
