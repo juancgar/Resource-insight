@@ -20,5 +20,5 @@ class GraphBase(BaseModel):
 
 
 @app.post("/get-net-flux")
-def get_net_flux(data: dict[str, GraphBase]):
+def get_net_flux(data: Dict[str, GraphBase]):
     return popula_flujo_neto(data)
