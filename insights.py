@@ -206,7 +206,6 @@ f = {
     "egresos": {}
 }
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
-print(insight_perdida_recursos(auxDic, 'A'))
 
 
 def threshold_bajo(grafo):
