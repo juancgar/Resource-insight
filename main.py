@@ -21,12 +21,14 @@ def home():
 # regresa un arreglo de tuplas con su id y el valor neto ordenado de mayor a menor
 # parametro json y regresa un arreglo
 
+
 @app.post("/get-net-flux")
 async def get_net_flux(request: Request):
     file = await request.json()
     return dr.insight_top_3(file)
 
+
 @app.post("/get-node-with-more-error")
-async def get_node_with_more_error(request:Request):
+async def get_node_with_more_error(request: Request):
     file = await request.json()
     return dr.threshold_bajo(file)
