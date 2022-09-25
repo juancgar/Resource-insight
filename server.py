@@ -17,7 +17,7 @@ class GraphBase(BaseModel):
 #regresa un arreglo de tuplas con su id y el valor neto ordenado de mayor a menor
 #parametro json y regresa un arreglo
 @app.post("/get-net-flux")
-def get_net_flux(data:dict[str,GraphBase]):
+def get_net_flux(data:Dict[str,GraphBase]):
     return popula_flujo_neto(data)
     
     
