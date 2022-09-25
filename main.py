@@ -13,10 +13,6 @@ class GraphBase(BaseModel):
     egresos: int
     sinIngresos: bool
     sinEgresos: bool
-
-@app.get("/")
-def home():
-    return {"message":"Hello TutLinks.com"}
     
 #regresa un arreglo de tuplas con su id y el valor neto ordenado de mayor a menor
 #parametro json y regresa un arreglo
