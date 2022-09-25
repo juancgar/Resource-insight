@@ -1,4 +1,5 @@
 import math
+import heapq
 
 
 def calculo_total_neto(ingresos, egresos):  # Recibe un diccionario
@@ -37,5 +38,91 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
 # Insights sobre ese nodo
 
 
-def curiosities_about_node(grafo, nombre):
-    return
+class object1:
+    def __init__(self):
+        self.nombre = "nodo A"
+        self.sinIngresos = True
+        self.ingresos = {}
+        self.egresos = {'B': 40, 'C': 30}
+
+
+class object2:
+    def __init__(self):
+        self.nombre = "nodo B"
+        self.sinIngresos = False
+        self.ingresos = {'A': 20}
+        self.egresos = {'C': 5}
+
+
+class object3:
+    def __init__(self):
+        self.nombre = "nodo C"
+        self.sinIngresos = False
+        self.ingresos = {'A': 30, 'B': 5}
+        self.egresos = {}
+
+
+def porcentajes_top3_nodos(outputStr, stats, nodo, sumaEgresos, grafo):
+    outputStr.append(["El nodo de distribucion '", nodo.nombre, "' ofrece:\n"])
+    for nodeId, cantidad in stats:
+        print("debug", nodeId, cantidad)
+        outputStr.append('- ')
+        outputStr.append(str(round(cantidad / sumaEgresos * 100, 2)))
+        outputStr.append('%')
+        outputStr.append(" de sus recursos en el nodo de distribucion '")
+        outputStr.append(grafo[nodeId].nombre)
+        outputStr.append("'\n")
+
+
+def curiosities_about_node(grafo, newId):
+    insights = []
+    nodo = grafo[newId]
+    _, sumaEgresos = calculo_total_neto(
+        nodo.ingresos.values(), nodo.egresos.values())
+
+    # Guarda valores ordenados de mayor a menor en formato Heapq(<"valor de egreso">, <"id de otro nodo">)
+    heap = []  # Ejemplo: [[-40, 'B'],[-30,'C']]
+    for keyNode in nodo.egresos:  # Itera sobre un diccionario de adyacencias
+        heap.append([-1 * nodo.egresos[keyNode], keyNode])
+    heapq.heapify(heap)
+    cantHijos = min(len(heap), 3)
+    egresoTop3Nodos = 0
+    stats = []  # Var temporal guarda pares en formato Pair()
+    for i in range(cantHijos):
+        cantEgreso, nodoQueRecibe = heapq.heappop(heap)
+        cantEgreso *= -1
+        egresoTop3Nodos += cantEgreso
+        stats.append((nodoQueRecibe, cantEgreso))
+
+    outputStr = []
+    porcentajes_top3_nodos(outputStr, stats, nodo, sumaEgresos, grafo)
+    if len(heap) > 3:
+        outputStr.append("\nEl ")
+        restante = sumaEgresos-egresoTop3Nodos
+        outputStr.append(str(round(restante / sumaEgresos * 100, 2)))
+        # outputStr.append("\nEl resto de los nodos de distribucion (son ")
+        # outputStr.append(len(heap)-cantHijos)
+        # outputStr.append(") ")
+    # newOutStr = "".join(outputStr)
+    # if len(cantHijos) <= 3:
+    #     outputStr.append("\n")
+    #     if egresoTotalCurNode < sumaEgresos-0.05:
+    #         outputStr.append("Observación de seguimiento:\n")
+    #         outputStr.append(" - Hay una perdida de recursos, se despleg\n")
+    #     outputStr.append()
+    # if len(cantHijos) > 3:
+    #     outputStr.append("\n ")
+    #     outputStr.append("\nSus dependencias utilizan el ")
+    # print(newOutStr)
+
+    # if len(heap) >= 4:
+    # stats.append()
+    # if nodo.sinIngresos:
+    # insights.append(
+    # "El nodo " + nodo.nombre + " ofrece " + sumaEgresos
+    # )
+a = object1()
+b = object2()
+c = object3()
+auxDic = {'A': a, 'B': b, 'C': c}
+curiosities_about_node(auxDic, 'A')
