@@ -10,3 +10,4 @@ def popula_flujo_neto(grafo):
             nodo.ingresos.values(), nodo.egresos.values())
         net_values.append((ingreso-egreso, nodo.id))
     net_values.sort(reverse=True)
+    return net_values
