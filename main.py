@@ -1,15 +1,6 @@
 from fastapi import FastAPI
-<<<<<<< HEAD
-
-app = FastAPI()
-
-#domain where this api is hosted for example : localhost:5000/docs to see swagger documentation automagically generated.
-
-
-@app.get("/")
-def home():
-    return {"message":"Hello TutLinks.com"}
-=======
+from pydantic import BaseModel
+from typing import Dict
 from data_read import popula_flujo_neto
 
 app = FastAPI()
@@ -33,5 +24,3 @@ def home():
 def get_net_flux(data:Dict[str,GraphBase]):
     return popula_flujo_neto(data)
     
-    
->>>>>>> parent of dcbbdad (devops)
