@@ -241,7 +241,7 @@ def threshold_bajo(grafo):
 
     return listaDeMenos
 def insight_mayor_riesgo_de_shortage(grafo):
-    net_values = threshold_bajo(auxDic)
+    net_values = threshold_bajo(grafo)
     insights = []
     # Regresaremos informacion del top 3 de nodos que son susceptible a shortage
     top = min(len(net_values), 3)
