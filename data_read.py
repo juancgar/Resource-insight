@@ -34,7 +34,7 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
     for idx in range(top):
         nombre = grafo[net_values[idx][1]]["nombre"]
         insights.append(
-            "El nodo " + " es el nodo de distribucion #" + str(idx+1)
+            "El nodo " + nombre + " es el nodo de distribucion #" + str(idx+1)
         )
     return insights
 
@@ -130,4 +130,4 @@ a = object1()
 b = object2()
 c = object3()
 auxDic = {'A': a, 'B': b, 'C': c}
-curiosities_about_node(auxDic, 'A')
+#curiosities_about_node(auxDic, 'A')

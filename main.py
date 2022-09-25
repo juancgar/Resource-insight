@@ -1,8 +1,7 @@
 from fastapi import Request, FastAPI
 from pydantic import BaseModel
 from typing import Dict
-from data_read import popula_flujo_neto
-
+import data_read as dr
 app = FastAPI()
 
 
@@ -26,4 +25,4 @@ def home():
 @app.post("/get-net-flux")
 async def get_net_flux(request: Request):
     file = await request.json()
-    return popula_flujo_neto(file)
+    return dr.insight_top_3(file)
