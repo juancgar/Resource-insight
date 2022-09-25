@@ -1,3 +1,4 @@
+from hashlib import new
 import math
 import heapq
 
@@ -42,53 +43,35 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
 # Insights sobre ese nodo
 
 
-class object1:
-    def __init__(self):
-        self.nombre = "nodo A"
-        self.sinIngresos = True
-        self.ingresos = {}
-        self.egresos = {'B': 40, 'C': 30}
-
-
-class object2:
-    def __init__(self):
-        self.nombre = "nodo B"
-        self.sinIngresos = False
-        self.ingresos = {'A': 20}
-        self.egresos = {'C': 5}
-
-
-class object3:
-    def __init__(self):
-        self.nombre = "nodo C"
-        self.sinIngresos = False
-        self.ingresos = {'A': 30, 'B': 5}
-        self.egresos = {}
-
-
 def porcentajes_top3_nodos(outputStr, stats, nodo, sumaEgresos, grafo):
-    outputStr.append(["El nodo de distribucion '", nodo.nombre, "' ofrece:\n"])
+    outputStr.append("El nodo de distribucion '")
+    outputStr.append(nodo["nombre"])
+    outputStr.append("' ofrece:\n")
     for nodeId, cantidad in stats:
-        print("debug", nodeId, cantidad)
-        outputStr.append('- ')
+        outputStr.append("- ")
         outputStr.append(str(round(cantidad / sumaEgresos * 100, 2)))
-        outputStr.append('%')
+        outputStr.append("%")
         outputStr.append(" de sus recursos en el nodo de distribucion '")
-        outputStr.append(grafo[nodeId].nombre)
+        outputStr.append(grafo[nodeId]["nombre"])
         outputStr.append("'\n")
 
 
-def curiosities_about_node(grafo, newId):
-    insights = []
+# def obtener_top 3 porcentajes mas relevantes
+def insight_porcentajes(grafo, newId):
     nodo = grafo[newId]
+    ingresos = nodo["ingresos"]
+    egresos = nodo["egresos"]
     _, sumaEgresos = calculo_total_neto(
-        nodo.ingresos.values(), nodo.egresos.values())
+        ingresos.values(), egresos.values())
 
     # Guarda valores ordenados de mayor a menor en formato Heapq(<"valor de egreso">, <"id de otro nodo">)
     heap = []  # Ejemplo: [[-40, 'B'],[-30,'C']]
-    for keyNode in nodo.egresos:  # Itera sobre un diccionario de adyacencias
-        heap.append([-1 * nodo.egresos[keyNode], keyNode])
+    for keyNode in egresos:  # Itera sobre un diccionario de adyacencias
+        heap.append([-1 * egresos[keyNode], keyNode])
     heapq.heapify(heap)
+    if heap[0][0]+heap[1][0]+heap[2][0] >= -60:
+        return ""
+
     cantHijos = min(len(heap), 3)
     egresoTop3Nodos = 0
     stats = []  # Var temporal guarda pares en formato Pair()
@@ -100,25 +83,27 @@ def curiosities_about_node(grafo, newId):
 
     outputStr = []
     porcentajes_top3_nodos(outputStr, stats, nodo, sumaEgresos, grafo)
-    if len(heap) > 3:
-        outputStr.append("\nEl ")
-        restante = sumaEgresos-egresoTop3Nodos
-        outputStr.append(str(round(restante / sumaEgresos * 100, 2)))
-        # outputStr.append("\nEl resto de los nodos de distribucion (son ")
-        # outputStr.append(len(heap)-cantHijos)
-        # outputStr.append(") ")
-    # newOutStr = "".join(outputStr)
-    # if len(cantHijos) <= 3:
-    #     outputStr.append("\n")
-    #     if egresoTotalCurNode < sumaEgresos-0.05:
-    #         outputStr.append("Observación de seguimiento:\n")
-    #         outputStr.append(" - Hay una perdida de recursos, se despleg\n")
-    #     outputStr.append()
-    # if len(cantHijos) > 3:
-    #     outputStr.append("\n ")
-    #     outputStr.append("\nSus dependencias utilizan el ")
-    # print(newOutStr)
 
+    if len(egresos) > 3:
+        restante = sumaEgresos-egresoTop3Nodos
+        outputStr.append("\n")
+        outputStr.append(str(round(restante / sumaEgresos * 100, 2)))
+        outputStr.append("% ")
+        outputStr.append(
+            "Se distribuyen al resto de los nodos de distribucion (son ")
+        outputStr.append(str(len(egresos)-3))
+        outputStr.append(")")
+    newOutStr = "".join(outputStr)
+    print("debug", newOutStr)
+
+    return newOutStr
+
+
+def generar_insights(grafo, newId=None):
+    insights = []
+    firstInsi = insight_porcentajes(grafo, newId)
+    if len(firstInsi) > 0:
+        insights.append(firstInsi[0])
 
     # if len(heap) >= 4:
     # stats.append()
@@ -126,8 +111,44 @@ def curiosities_about_node(grafo, newId):
     # insights.append(
     # "El nodo " + nodo.nombre + " ofrece " + sumaEgresos
     # )
-a = object1()
-b = object2()
-c = object3()
-auxDic = {'A': a, 'B': b, 'C': c}
-curiosities_about_node(auxDic, 'A')
+
+
+a = {
+    "nombre": "nodo A",
+    "sinIngresos": True,
+    "ingresos": {},
+    "egresos": {'B': 30, 'C': 20, 'D': 40, 'E': 50, 'F': 7}
+}
+b = {
+    "nombre": "nodo B",
+    "sinIngresos": False,
+    "ingresos": {'A': 200},
+    "egresos": {'C': 5}
+}
+
+c = {
+    "nombre": "nodo C",
+    "sinIngresos": False,
+    "ingresos": {'A': 3034, 'B': 5},
+    "egresos": {}
+}
+d = {
+    "nombre": "nodo D",
+    "sinIngresos": False,
+    "ingresos": {'A': 1},
+    "egresos": {}
+}
+e = {
+    "nombre": "nodo E",
+    "sinIngresos": False,
+    "ingresos": {'A': 1},
+    "egresos": {}
+}
+f = {
+    "nombre": "nodo F",
+    "sinIngresos": False,
+    "ingresos": {'A': 1},
+    "egresos": {}
+}
+auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
+insight_porcentajes(auxDic, 'A')
