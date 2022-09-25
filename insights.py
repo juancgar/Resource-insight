@@ -32,17 +32,17 @@ def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
     insights = []
     # Regresaremos informacion del top 3 de nodos que reciba y envíe información
     top = min(len(net_values), 3)
-    nombre1 = grafo[net_values[0][1]["nombre"]]
+    nombre1 = grafo[net_values[0][1]]["nombre"]
     insights.append(
         nombre1 +
         " es el principal productor neto de ingresos/egreso"
     )
-    nombre2 = grafo[net_values[0][1]["nombre"]]
+    nombre2 = grafo[net_values[0][1]]["nombre"]
     insights.append(
         nombre2 +
         " es el segundo lugar de productor neto de ingresos/egreso"
     )
-    nombre3 = grafo[net_values[0][1]["nombre"]]
+    nombre3 = grafo[net_values[0][1]]["nombre"]
     insights.append(
         nombre3 +
         " es el tercer más grande productor neto de ingresos/egreso"
@@ -223,16 +223,17 @@ f = {
     "egresos": {}
 }
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
+# insight nuevo
 
 
-#insight nuevo
 def threshold_bajo(grafo):
     grafoNeto = popula_flujo_neto(grafo)
     mediaEstadisticagrafoNetoDeDiferencia = 0
     cont = 0
     for x in grafoNeto:
-        mediaEstadisticagrafoNetoDeDiferencia = mediaEstadisticagrafoNetoDeDiferencia + x[0]
-        cont = cont+ 1
+        mediaEstadisticagrafoNetoDeDiferencia = mediaEstadisticagrafoNetoDeDiferencia + \
+            x[0]
+        cont = cont + 1
     media = mediaEstadisticagrafoNetoDeDiferencia/cont
     listaDeMenos = []
     for x in grafoNeto:
@@ -240,6 +241,8 @@ def threshold_bajo(grafo):
             listaDeMenos.append(x)
 
     return listaDeMenos
+
+
 def insight_mayor_riesgo_de_shortage(grafo):
     net_values = threshold_bajo(grafo)
     insights = []
@@ -248,7 +251,6 @@ def insight_mayor_riesgo_de_shortage(grafo):
     for idx in range(top):
         nombre = grafo[net_values[idx][1]]["nombre"]
         insights.append(
-            "El nodo "+ nombre + "es susceptible a escasez "
+            "El nodo " + nombre + "es susceptible a escasez "
         )
     return insights
-
