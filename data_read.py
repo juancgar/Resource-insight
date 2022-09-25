@@ -69,9 +69,14 @@ def insight_porcentajes(grafo, newId):
     for keyNode in egresos:  # Itera sobre un diccionario de adyacencias
         heap.append([-1 * egresos[keyNode], keyNode])
     heapq.heapify(heap)
-    if heap[0][0]+heap[1][0]+heap[2][0] >= -60:
-        return ""
-
+    if len(heap) > 3:
+        first, keyF = heap[0][0], heap[1][0]
+        second, keyS = heap[0][0], heap[1][0]
+        if heap[0][0]+second >= -60:
+            return ""
+        heap.append([first, keyF])
+        heap.append([second, keyS])
+        heapq.heapify(heap)
     cantHijos = min(len(heap), 3)
     egresoTop3Nodos = 0
     stats = []  # Var temporal guarda pares en formato Pair()
@@ -201,3 +206,4 @@ f = {
     "egresos": {}
 }
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
+print(insight_perdida_recursos(auxDic, 'A'))
