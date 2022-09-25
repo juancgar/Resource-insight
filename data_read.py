@@ -56,7 +56,7 @@ def porcentajes_top3_nodos(outputStr, stats, nodo, sumaEgresos, grafo):
         outputStr.append("'\n")
 
 
-# def obtener_top 3 porcentajes mas relevantes
+# obtener_top 3 porcentajes mas relevantes
 def insight_porcentajes(grafo, newId):
     nodo = grafo[newId]
     ingresos = nodo["ingresos"]
@@ -94,23 +94,73 @@ def insight_porcentajes(grafo, newId):
         outputStr.append(str(len(egresos)-3))
         outputStr.append(")")
     newOutStr = "".join(outputStr)
-    print("debug", newOutStr)
 
     return newOutStr
 
 
+def insight_perdida_recursos(grafo, newId):
+    outputStr = []
+    nodo = grafo[newId]
+    ingresos = nodo["ingresos"]
+    egresos = nodo["egresos"]
+    _, sumaEgresos = calculo_total_neto(
+        ingresos.values(), egresos.values())
+
+    # Contiene un Pair(), 1er valor es el valor de perdida, 2do valor es id del nodo
+    nodosPerdida = []
+    reciboTotal = 0
+    for keyNode in egresos:
+        # Guarda cuanto dinero tiene el padre para el hijo
+        salienteHijo = egresos[keyNode]
+        # Guarda ID del nodo que buscamos a partir del padre
+        childNode = grafo[keyNode]["ingresos"]
+        # Guarda el ingreso int() que recibe como llave del padre
+        ingresoPadre = childNode[newId]
+        reciboTotal += ingresoPadre
+        if round(ingresoPadre, 2) < round(salienteHijo-0.05, 2):
+            nodosPerdida.append(
+                (salienteHijo-ingresoPadre, grafo[keyNode]["nombre"]))
+    if len(nodosPerdida) == 0 and round(sumaEgresos-0.05, 2) > round(reciboTotal, 2):
+        outputStr.append("Observación de seguimiento:\n")
+        outputStr.append(
+            " - Hay una perdida en la cadena de suministro, la suma de todos los recursos causa una perdida global de ")
+        outputStr.append(str(round(sumaEgresos-reciboTotal, 2)))
+        outputStr.append(
+            "\nSugerimos revisar cada instancia que recibe recursos desde el nodo de distribucion '")
+        outputStr.append(nodo["nombre"])
+        outputStr.append("'")
+        return "".join(outputStr)
+
+    if len(nodosPerdida) > 0:
+        nodosPerdida.sort(reverse=True)
+        outputStr.append("Observación de seguimiento:\n")
+        outputStr.append(
+            " - Hay una perdida de recursos, sugerimos revisar el traslado de recursos desde")
+        outputStr.append(nodo["nombre"])
+        outputStr.append(" a los siguientes nodos de distribucion:\n")
+        cantNodes = min(3, len(nodosPerdida))
+
+        for i in range(cantNodes):
+            outputStr.append(" - '")
+            nodeName = nodosPerdida[i][1]
+            outputStr.append(nodeName)
+            outputStr.append("' | Este presenta una perdida de: ")
+            outputStr.append(str(round(nodosPerdida[i][0], 2)))
+            outputStr.append("\n")
+
+        return "".join(outputStr)
+    return ""
+
+
 def generar_insights(grafo, newId=None):
     insights = []
-    firstInsi = insight_porcentajes(grafo, newId)
-    if len(firstInsi) > 0:
-        insights.append(firstInsi[0])
+    method = insight_porcentajes(grafo, newId)
+    if len(method) > 0:
+        insights.append(method[0])
 
-    # if len(heap) >= 4:
-    # stats.append()
-    # if nodo.sinIngresos:
-    # insights.append(
-    # "El nodo " + nodo.nombre + " ofrece " + sumaEgresos
-    # )
+    method = insight_perdida_recursos(grafo, newId)
+    if len(method) > 0:
+        insights.append(method[0])
 
 
 a = {
@@ -122,33 +172,32 @@ a = {
 b = {
     "nombre": "nodo B",
     "sinIngresos": False,
-    "ingresos": {'A': 200},
+    "ingresos": {'A': 29.98},
     "egresos": {'C': 5}
 }
 
 c = {
     "nombre": "nodo C",
     "sinIngresos": False,
-    "ingresos": {'A': 3034, 'B': 5},
+    "ingresos": {'A': 19.95, 'B': 5},
     "egresos": {}
 }
 d = {
     "nombre": "nodo D",
     "sinIngresos": False,
-    "ingresos": {'A': 1},
+    "ingresos": {'A': 39.99},
     "egresos": {}
 }
 e = {
     "nombre": "nodo E",
     "sinIngresos": False,
-    "ingresos": {'A': 1},
+    "ingresos": {'A': 49.95},
     "egresos": {}
 }
 f = {
     "nombre": "nodo F",
     "sinIngresos": False,
-    "ingresos": {'A': 1},
+    "ingresos": {'A': 6.99},
     "egresos": {}
 }
 auxDic = {'A': a, 'B': b, 'C': c, 'D': d, 'E': e, 'F': f}
-insight_porcentajes(auxDic, 'A')
