@@ -1,5 +1,5 @@
 from typing import Union
-from typing import List
+from typing import Dict
 from pydantic import BaseModel
 from fastapi import FastAPI
 from data_read import popula_flujo_neto
@@ -7,14 +7,17 @@ from data_read import popula_flujo_neto
 app = FastAPI()
 
 class GraphBase(BaseModel):
-    id: int
+
     nombre: str
     ingresos: int
     egresos: int
+    sinIngresos: bool
+    sinEgresos: bool
 
-class GraphList(BaseModel):
-    data: List[GraphBase]
-
+#regresa un arreglo de tuplas con su id y el valor neto ordenado de mayor a menor
+#parametro json y regresa un arreglo
 @app.post("/get-net-flux")
-async def get_net_flux(data:GraphList):
+def get_net_flux(data:dict[str,GraphBase]):
     return popula_flujo_neto(data)
+    
+    
