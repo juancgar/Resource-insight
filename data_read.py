@@ -21,11 +21,9 @@ def popula_flujo_neto(grafo):  # Recibe un diccionario <Object.id, Object>
 
 def insight_top_3(grafo):  # Recibe un diccionario <Object.id, Object>
     net_values = popula_flujo_neto(grafo)
-    print(math.ceil(len(net_values)*0.05))
     insights = []
     # Regresaremos informacion del top 3 de nodos que reciba y envíe información
     top = min(len(net_values), 3)
-    print("debug", top)
     for idx in range(top):
         insights.append(
             "El nodo " + grafo[net_values[idx][1]].nombre +
