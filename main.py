@@ -1,7 +1,9 @@
+from urllib import request
 from fastapi import Request, FastAPI
 from pydantic import BaseModel
 from typing import Dict
-import data_read as dr
+import insights as dr
+import mqtt as mqtt
 app = FastAPI()
 
 
@@ -32,3 +34,8 @@ async def get_net_flux(request: Request):
 async def get_node_with_more_error(request: Request):
     file = await request.json()
     return dr.threshold_bajo(file)
+
+@app.post("/mqtt-demonstration")
+async def mqtt_demonstration(request:Request):
+    file = await request.json()
+    return mqtt.start(file)
