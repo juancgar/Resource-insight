@@ -131,3 +131,15 @@ b = object2()
 c = object3()
 auxDic = {'A': a, 'B': b, 'C': c}
 #curiosities_about_node(auxDic, 'A')
+
+def threshold_bajo(grafo):
+    grafoNeto = popula_flujo_neto(grafo)
+
+    mediaEstadisticagrafoNetoDeDiferencia = 0
+    cont = 0
+    for x,y in grafoNeto:
+        mediaEstadisticaDeDiferencia += x
+        cont += 1
+    
+    
+    grafoNeto.sort()
