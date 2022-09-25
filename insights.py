@@ -80,8 +80,8 @@ def insight_porcentajes(grafo, newId):
         heap.append([-1 * egresos[keyNode], keyNode])
     heapq.heapify(heap)
     if len(heap) > 3:
-        first, keyF = heap[0][0], heap[1][0]
-        second, keyS = heap[0][0], heap[1][0]
+        first, keyF = heap[0][0], heap[0][1]
+        second, keyS = heap[0][0], heap[0][1]
         if heap[0][0]+second >= -60:
             return ""
         heap.append([first, keyF])
@@ -171,22 +171,25 @@ def generar_insights(grafo, newId=None):
     insights = []
     method = insight_porcentajes(grafo, newId)
     if len(method) > 0:
-        insights.append(method[0])
+        insights.append(method)
 
     method = insight_perdida_recursos(grafo, newId)
     if len(method) > 0:
-        insights.append(method[0])
+        insights.append(method)
+    return insights
 
 
 a = {
     "nombre": "nodo A",
     "sinIngresos": True,
+    "sinEgresos": False,
     "ingresos": {},
     "egresos": {'B': 30, 'C': 20, 'D': 40, 'E': 50, 'F': 7}
 }
 b = {
     "nombre": "nodo B",
     "sinIngresos": False,
+    "sinEgresos": False,
     "ingresos": {'A': 29.98},
     "egresos": {'C': 5}
 }
@@ -194,24 +197,28 @@ b = {
 c = {
     "nombre": "nodo C",
     "sinIngresos": False,
+    "sinEgresos": True,
     "ingresos": {'A': 19.95, 'B': 5},
     "egresos": {}
 }
 d = {
     "nombre": "nodo D",
     "sinIngresos": False,
+    "sinEgresos": True,
     "ingresos": {'A': 39.99},
     "egresos": {}
 }
 e = {
     "nombre": "nodo E",
     "sinIngresos": False,
+    "sinEgresos": True,
     "ingresos": {'A': 49.95},
     "egresos": {}
 }
 f = {
     "nombre": "nodo F",
     "sinIngresos": False,
+    "sinEgresos": True,
     "ingresos": {'A': 6.99},
     "egresos": {}
 }
