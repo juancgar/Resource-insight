@@ -1,15 +1,20 @@
 from typing import Union
-
+from typing import List
+from pydantic import BaseModel
 from fastapi import FastAPI
+from data_read import popula_flujo_neto
 
 app = FastAPI()
 
+class GraphBase(BaseModel):
+    id: int
+    nombre: str
+    ingresos: int
+    egresos: int
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+class GraphList(BaseModel):
+    data: List[GraphBase]
 
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/get-net-flux")
+async def get_net_flux(data:GraphList):
+    return popula_flujo_neto(data)
