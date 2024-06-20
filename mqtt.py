@@ -11,7 +11,7 @@ password = 'public'
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
-            print("Connected to MQTT Broker!")
+            print("Connected to the broker")
         else:
             print("Failed to connect, return code %d\n", rc)
 
