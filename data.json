@@ -1,0 +1,155 @@
+{
+	"A": 
+    {
+		"nombre": "Presa de la boca",
+        "sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {
+            "J":712,
+            "C":515
+            },
+		"egresos": {
+            "J":0
+        }
+    },
+    "B":
+  {
+	"nombre": "Tunel San Francisco",
+	"sinIngresos": true,
+	"sinEgresos":false,
+  	"ingresos":{
+    },
+	 "egresos":{
+        "C":317,
+        "L":189
+     }
+  },		
+	"C": {
+		"nombre": "Planta de Tratamiento la Boca",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"A":515},
+		"egresos": {"L":608}
+	},
+	  "E": {
+		"nombre": "Tunel Caballo I",
+		"sinIngresos": true,
+		"sinEgresos": false,
+		"ingresos": {},
+		"egresos": {"L":189}
+	},
+    "F": {
+		"nombre": "Tunel Caballo II",
+		"sinIngresos": true,
+		"sinEgresos": false,
+		"ingresos": {},
+		"egresos": {"L":189}
+	},
+
+    "G": {
+		"nombre": "Manantial Estanzuela",
+		"sinIngresos": true,
+		"sinEgresos": false,
+		"ingresos": {},
+		"egresos": {"L":0}
+	},
+
+    "H": {
+		"nombre": "Planta Tratamiento China",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"I":21116},
+		"egresos": {"K":0}
+	},
+    "I": {
+		"nombre": "Presa el Cuchillo",
+		"sinIngresos": true,
+		"sinEgresos": false,
+		"ingresos": {},
+		"egresos": {"K":21116}
+	},
+    "J": {
+		"nombre": "PB 4 Linares",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {
+            "D":0
+        },
+		"egresos": {
+            "K":0
+        }
+	},
+    "D":{
+        "nombre": "Presa Cerro Prieto",
+		"sinIngresos": true,
+		"sinEgresos": false,
+		"ingresos": {},
+		"egresos": {"J":0}
+
+    },
+    "K": {
+		"nombre": "PP San Roque",
+		"sinIngresos": false,
+		"sinEgresos": true,
+		"ingresos": {"J":0,
+        "H":21116
+    },
+		"egresos": {}
+	},
+    "L": {
+		"nombre": "Sur",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {
+        "C":172,
+        "B":172,
+        "E":172,
+        "F":172,
+        "G":172
+    },
+		"egresos": {}
+	},
+    "M": {
+		"nombre": "Loma Larga",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"L":275},
+		"egresos": {"N":394}
+	},
+    "N": {
+		"nombre": "Obispado",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"M":394},
+		"egresos": {"O":379}
+	},
+    "O": {
+		"nombre": "Cisterna Santa Catarina",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"N":379},
+		"egresos": {"P":651}
+	},
+    "P": {
+		"nombre": "San Pedro I",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"O":2269},
+		"egresos": {"Q":191}
+	},
+    "Q": {
+		"nombre": "Valle IV",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"P":191},
+		"egresos": {"R":302}
+	},"R": {
+		"nombre": "Valle II",
+		"sinIngresos": false,
+		"sinEgresos": false,
+		"ingresos": {"Q":302},
+		"egresos": {"M":151}
+	}
+
+
+}
